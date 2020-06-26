@@ -54,7 +54,7 @@ export default function Register() {
     <div>
       {isLoggedIn && <Redirect to="/dashboard" />}
       <form className={classes.container} onSubmit={handleSubmit}>
-        <Typography variant="h4"> User Sign up Form</Typography>
+        <Typography variant="h4"> User Registeration Form</Typography>
         <TextField
           type="email"
           value={email}
