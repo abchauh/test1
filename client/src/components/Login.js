@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { TextField, makeStyles, Button, Typography } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 const useloginStyles = makeStyles((theme) => ({
   container: {
@@ -22,6 +22,16 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isLoggedIn] = useState(() => {
+    if (
+      localStorage.getItem("token") &&
+      localStorage.getItem("token").length !== 0
+    ) {
+      return true;
+    }
+    return false;
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let payload = { username, password };
@@ -31,8 +41,8 @@ export default function Login() {
         payload
       );
       if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
         history.push("/dashboard");
-        console.log(response.data);
       }
     } catch (error) {
       alert(error);
@@ -41,6 +51,7 @@ export default function Login() {
 
   return (
     <div>
+      {isLoggedIn && <Redirect to="/dashboard" />}
       <form className={classes.container} onSubmit={handleSubmit}>
         <Typography variant="h4">Login Form</Typography>
         <TextField

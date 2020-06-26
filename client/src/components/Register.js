@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { makeStyles, Typography, TextField, Button } from "@material-ui/core";
 
 const useRegisterStyles = makeStyles((theme) => ({
@@ -24,6 +24,16 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
+  const [isLoggedIn] = useState(() => {
+    if (
+      localStorage.getItem("token") &&
+      localStorage.getItem("token").length !== 0
+    ) {
+      return true;
+    }
+    return false;
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let payload = { email, username, password };
@@ -42,6 +52,7 @@ export default function Register() {
 
   return (
     <div>
+      {isLoggedIn && <Redirect to="/dashboard" />}
       <form className={classes.container} onSubmit={handleSubmit}>
         <Typography variant="h4"> User Sign up Form</Typography>
         <TextField
