@@ -6,6 +6,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import Register from "./components/Register.js";
+import Login from "./components/Login.js";
+import Dashboard from "./components/Dashboard";
 
 function NoMatch() {
   let location = useLocation();
@@ -25,6 +27,12 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Register />
+        </Route>
+        <Route exact path="/signin">
+          <Login />
+        </Route>
+        <Route exact path="/dashboard">
+          <Dashboard />
         </Route>
         <Route path="*">
           <NoMatch />

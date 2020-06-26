@@ -26,7 +26,9 @@ router.post("/signin", (req, res) => {
   User.findOne({ username, password })
     .then((user) => {
       if (!user) {
-        return res.status(400).json({ emailNotFound: "username or password is wrong" });
+        return res
+          .status(400)
+          .json({ emailNotFound: "username or password is wrong" });
       } else {
         res.status(200).json({
           message: "user successfully signedin",
